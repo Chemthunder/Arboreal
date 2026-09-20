@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "arboreal",
+	"version": "${version}",
+	"name": "Arboreal",
+	"description": "A library adding plenty of utilities to aid you in several fields.",
+	"authors": [
+		"Chemthunder"
+	],
+	"contact": {
+		"homepage": "https://chemthunderdev.vercel.app",
+		"sources": "https://github.com/Chemthunder/Arboreal"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/arboreal/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"org.chemthunder.arboreal.core.ArborealCore"
+		],
+		"fabric-datagen": [
+			"org.chemthunder.arboreal.core.ArborealCore"
+		]
+	},
+	"mixins": [
+		"arboreal.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

@@ -3,10 +3,14 @@ package org.chemthunder.arboreal.api.data.resources.client;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import org.chemthunder.arboreal.api.data.resources.DataHook;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -34,6 +38,8 @@ public class TranslationSupplier extends DataHook {
                 TranslationSupplier.this.supplyItems(registryLookup, translationBuilder);
                 TranslationSupplier.this.supplyBlocks(registryLookup, translationBuilder);
                 TranslationSupplier.this.supplyEntityTypes(registryLookup, translationBuilder);
+
+                translationBuilder.add("arboreal.unused.spacer", "MISC TEXT");
 
                 TranslationSupplier.this.supplyAdvancements(registryLookup, translationBuilder);
                 TranslationSupplier.this.supplyTexts(registryLookup, translationBuilder);

@@ -3,9 +3,12 @@ package org.chemthunder.arboreal.api.data.resources.server;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.TagEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -57,6 +60,18 @@ public class TagSupplier<T> extends DataHook {
     public String getDataType() {
         return "tag entries";
     }
+
+    public RegistryKey<Item> getItemKey(ItemConvertible value) {
+        return RegistryKey.of(RegistryKeys.ITEM, Registries.ITEM.getId(value.asItem()));
+    }
+
+    public RegistryKey<Block> getBlockKey(Block value) {
+        return RegistryKey.of(RegistryKeys.BLOCK, Registries.BLOCK.getId(value));
+    }
+
+//    public <V extends Entity> RegistryKey<EntityType<V>> getEntityKey(EntityType<V> value) {
+//        return RegistryKey.of(RegistryKeys.ENTITY_TYPE, Registries.ENTITY_TYPE.getId(value));
+//    }
 
     public record SuppliedTag(Identifier identifier, List<TagEntry> entries) {}
 }

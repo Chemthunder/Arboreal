@@ -1,27 +1,24 @@
 package org.chemthunder.arboreal.api.event.client;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.entity.LivingEntity;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import org.chemthunder.arboreal.api.event.EventUtil;
 
 /**
  * @author Chemthunder
  */
+@Environment(EnvType.CLIENT)
 public interface UpdateRenderStateCallback {
     Event<UpdateRenderStateCallback> EVENT = EventFactory.createArrayBacked(UpdateRenderStateCallback.class,
             events -> (
                     entity,
                     renderState
             ) -> {
-                List<UpdateRenderStateCallback> sortedEvents = new ArrayList<>(Arrays.asList(events));
-                sortedEvents.sort(Comparator.comparingInt(UpdateRenderStateCallback::getPriority));
-                for (UpdateRenderStateCallback event : sortedEvents) {
+                for (UpdateRenderStateCallback event : EventUtil.sortAndCollectEvents(events, UpdateRenderStateCallback::getPriority)) {
                     event.updateRenderState(entity, renderState);
                 }
             }

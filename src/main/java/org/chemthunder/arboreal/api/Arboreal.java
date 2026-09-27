@@ -1,6 +1,7 @@
 package org.chemthunder.arboreal.api;
 
 import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 import org.chemthunder.arboreal.api.registration.Index;
 
 /**
@@ -14,6 +15,10 @@ public class Arboreal {
     }
 
     public <T> Index<T> createIndex(Registry<T> registry) {
-        return new Index<>(registry, this.modid);
+        return new Index<>(registry, modid);
+    }
+
+    public Identifier id(String path) {
+        return Identifier.of(modid, path);
     }
 }

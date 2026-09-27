@@ -22,7 +22,12 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
         super(context);
     }
 
-    @Inject(method = "updateRenderState(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/client/render/entity/state/LivingEntityRenderState;F)V", at = @At(value = "TAIL"))
+    @Inject(
+            method = "updateRenderState(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/client/render/entity/state/LivingEntityRenderState;F)V",
+            at = @At(
+                    value = "TAIL"
+            )
+    )
     private void arboreal$updateRenderStateCallback(T livingEntity, S livingEntityRenderState, float f, CallbackInfo ci) {
         UpdateRenderStateCallback.EVENT.invoker().updateRenderState(livingEntity, livingEntityRenderState);
     }

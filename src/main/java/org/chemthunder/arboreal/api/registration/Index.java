@@ -23,10 +23,14 @@ public class Index<T> {
 
     public <M extends T> M register(String name, M obj) {
         this.objs.add(obj);
-        return Registry.register(this.registry, Identifier.of(this.modid, name), obj);
+        return Registry.register(this.registry, id(name), obj);
     }
 
     public Identifier getId(T object) {
         return this.registry.getId(object);
+    }
+
+    public Identifier id(String path) {
+        return Identifier.of(modid, path);
     }
 }

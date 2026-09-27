@@ -6,7 +6,9 @@ import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -14,8 +16,9 @@ import java.util.function.Predicate;
 /**
  * @author Chemthunder
  */
+@ApiStatus.NonExtendable
 @SuppressWarnings("unused")
-public class WorldUtil {
+public abstract class WorldUtil {
     public static <E extends Entity> List<E> getNearbyEntities(World world, BlockPos pos, int radius, Class<E> eClass) {
         return getNearbyEntities(world, pos, radius, eClass, EntityPredicates.EXCEPT_SPECTATOR);
     }
@@ -28,5 +31,13 @@ public class WorldUtil {
         if (entity instanceof ServerPlayerEntity serverPlayer) {
             criterion.trigger(serverPlayer);
         }
+    }
+
+    public static BlockPos toBlockPos(Vec3d vec3d) {
+        return new BlockPos.Mutable(
+                vec3d.x,
+                vec3d.y,
+                vec3d.z
+        );
     }
 }

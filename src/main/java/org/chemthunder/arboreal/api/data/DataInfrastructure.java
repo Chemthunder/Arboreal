@@ -28,7 +28,7 @@ public class DataInfrastructure {
         for (DataHook support : supports) {
             try {
                 support.generate(generator, pack);
-                ArborealCore.LOGGER.info("Generated {} from {}", support.getDataType(), support.getId());
+                ArborealCore.LOGGER.info("Generated {} from {}", support.getName(), support.getId());
             } catch (Exception e) {
                 ArborealCore.LOGGER.info("Unable to generate DataHook: {}", String.valueOf(e));
             }

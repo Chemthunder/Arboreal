@@ -57,7 +57,7 @@ public class TagSupplier<T> extends DataHook {
         return List.of();
     }
 
-    public String getDataType() {
+    public String getName() {
         return "tag entries";
     }
 

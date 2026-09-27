@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(value = MinecraftClient.class)
 public abstract class MinecraftClientMixin {
     @WrapMethod(method = "hasOutline")
-    private boolean apostle$distinguishOwnedAssMobs(Entity entity, Operation<Boolean> original) {
+    private boolean arboreal$ShouldRenderOutlineCallback(Entity entity, Operation<Boolean> original) {
         return original.call(entity) || ShouldRenderOutlineCallback.EVENT.invoker().shouldHaveOutline(entity);
     }
 }

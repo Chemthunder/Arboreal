@@ -27,7 +27,7 @@ public abstract class ItemStackMixin {
                     ordinal = 0
             )
     )
-    private <T> void arboreal$implTooltips(ItemStack instance, ComponentType<T> componentType, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type, Operation<Void> original) {
+    private <T> void arboreal$Tooltip(ItemStack instance, ComponentType<T> componentType, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type, Operation<Void> original) {
         if (instance.getItem() instanceof Tooltip tooltip) {
             tooltip.applyTooltip(instance, context, displayComponent, textConsumer, type);
         }

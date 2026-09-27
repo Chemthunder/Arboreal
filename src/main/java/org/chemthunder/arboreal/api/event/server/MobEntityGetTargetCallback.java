@@ -20,7 +20,7 @@ public interface MobEntityGetTargetCallback {
                     @Nullable LivingEntity callback = event.getTarget(mob, target);
                     return callback;
                 }
-                return null;
+                return target;
             }
     );
 
@@ -28,5 +28,5 @@ public interface MobEntityGetTargetCallback {
         return 1000;
     }
 
-    LivingEntity getTarget(MobEntity mob, LivingEntity originalTarget);
+    @Nullable LivingEntity getTarget(MobEntity mob, LivingEntity originalTarget);
 }

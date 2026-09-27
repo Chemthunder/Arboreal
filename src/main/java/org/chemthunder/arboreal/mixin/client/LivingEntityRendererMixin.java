@@ -28,7 +28,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
                     value = "TAIL"
             )
     )
-    private void arboreal$updateRenderStateCallback(T livingEntity, S livingEntityRenderState, float f, CallbackInfo ci) {
+    private void arboreal$UpdateRenderStateCallback(T livingEntity, S livingEntityRenderState, float f, CallbackInfo ci) {
         UpdateRenderStateCallback.EVENT.invoker().updateRenderState(livingEntity, livingEntityRenderState);
     }
 }

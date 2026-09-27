@@ -3,7 +3,8 @@
   "package": "org.chemthunder.arboreal.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ItemStackMixin"
+    "ItemStackMixin",
+    "MobEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

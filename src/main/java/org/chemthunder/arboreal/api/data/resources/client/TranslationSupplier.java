@@ -49,7 +49,7 @@ public class TranslationSupplier extends DataHook {
         pack.addProvider(Translations::new);
     }
 
-    public String getDataType() {
+    public String getName() {
         return "translations";
     }
 

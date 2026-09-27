@@ -38,7 +38,7 @@ public class ModelSupplier extends DataHook {
     public void supplyItemModels(ItemModelGenerator generator) {}
     public void supplyBlockStateModels(BlockStateModelGenerator generator) {}
 
-    public String getDataType() {
+    public String getName() {
         return "models";
     }
 }

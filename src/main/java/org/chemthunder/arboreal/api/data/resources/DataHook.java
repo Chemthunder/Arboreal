@@ -15,7 +15,7 @@ public abstract class DataHook {
 
     public abstract void generate(FabricDataGenerator generator, FabricDataGenerator.Pack pack);
 
-    public abstract String getDataType();
+    public abstract String getName();
 
     public Identifier getId() {
         return id;

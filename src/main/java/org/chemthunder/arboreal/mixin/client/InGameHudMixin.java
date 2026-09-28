@@ -18,8 +18,14 @@ import java.util.Optional;
 public abstract class InGameHudMixin {
     @Shadow @Nullable protected abstract PlayerEntity getCameraPlayer();
 
-    @WrapOperation(method = "drawHeart", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud$HeartType;getTexture(ZZZ)Lnet/minecraft/util/Identifier;"))
-    private Identifier customHearts(InGameHud.HeartType instance, boolean hardcore, boolean half, boolean blinking, Operation<Identifier> original) {
+    @WrapOperation(
+            method = "drawHeart",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/hud/InGameHud$HeartType;getTexture(ZZZ)Lnet/minecraft/util/Identifier;"
+            )
+    )
+    private Identifier arboreal$ApplyCustomHeartsCallback(InGameHud.HeartType instance, boolean hardcore, boolean half, boolean blinking, Operation<Identifier> original) {
         Optional<Identifier> callback = ApplyCustomHeartsCallback.EVENT.invoker().getHeartIdentifier(
                 MinecraftClient.getInstance(),
                 this.getCameraPlayer()

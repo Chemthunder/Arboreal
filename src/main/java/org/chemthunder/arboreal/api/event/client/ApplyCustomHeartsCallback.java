@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
+import org.chemthunder.arboreal.api.event.ArborealEvent;
 import org.chemthunder.arboreal.api.event.EventUtil;
 
 import java.util.Optional;
@@ -15,7 +16,7 @@ import java.util.Optional;
  * @author Chemthunder
  */
 @Environment(EnvType.CLIENT)
-public interface ApplyCustomHeartsCallback {
+public interface ApplyCustomHeartsCallback extends ArborealEvent {
     Event<ApplyCustomHeartsCallback> EVENT = EventFactory.createArrayBacked(ApplyCustomHeartsCallback.class,
             events -> (
                     client,
@@ -27,10 +28,6 @@ public interface ApplyCustomHeartsCallback {
                 return Optional.empty();
             }
     );
-
-    default int getPriority() {
-        return 1000;
-    }
 
     Optional<Identifier> getHeartIdentifier(MinecraftClient client, PlayerEntity cameraPlayer);
 }

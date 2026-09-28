@@ -6,13 +6,14 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.entity.LivingEntity;
+import org.chemthunder.arboreal.api.event.ArborealEvent;
 import org.chemthunder.arboreal.api.event.EventUtil;
 
 /**
  * @author Chemthunder
  */
 @Environment(EnvType.CLIENT)
-public interface UpdateRenderStateCallback {
+public interface UpdateRenderStateCallback extends ArborealEvent {
     Event<UpdateRenderStateCallback> EVENT = EventFactory.createArrayBacked(UpdateRenderStateCallback.class,
             events -> (
                     entity,
@@ -23,10 +24,6 @@ public interface UpdateRenderStateCallback {
                 }
             }
     );
-
-    default int getPriority() {
-        return 1000;
-    }
 
     void updateRenderState(LivingEntity living, LivingEntityRenderState renderState);
 }

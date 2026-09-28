@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.ToIntFunction;
 
 /**
@@ -24,5 +25,12 @@ public abstract class EventUtil {
         List<T> sortedEvents = new ArrayList<>(Arrays.asList(events));
         sortedEvents.sort(Comparator.comparingInt(value -> priority));
         return sortedEvents;
+    }
+
+    @ApiStatus.Experimental
+    public static <T> void deployVoidEvent(T[] events, Consumer<T> consumer) {
+        for (T event : sortAndCollectEvents(events, 1000)) {
+            consumer.accept(event);
+        }
     }
 }

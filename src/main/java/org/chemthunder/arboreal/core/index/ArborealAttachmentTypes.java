@@ -1,4 +1,4 @@
-package org.chemthunder.arboreal.api.impl;
+package org.chemthunder.arboreal.core.index;
 
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate;
@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 /**
  * @author Chemthunder
  */
+@SuppressWarnings("unused")
 public interface ArborealAttachmentTypes {
     AttachmentType<LazyEntityReference<LivingEntity>> OWNER = register(
             "owner",

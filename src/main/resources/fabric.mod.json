@@ -10,7 +10,7 @@
 	"contact": {
 		"sources": "https://github.com/Chemthunder/Arboreal"
 	},
-	"license": "CC0-1.0",
+	"license": "All Rights Reserved.",
 	"icon": "assets/arboreal/icon.png",
 	"environment": "*",
 	"entrypoints": {

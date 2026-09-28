@@ -4,13 +4,14 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
+import org.chemthunder.arboreal.api.event.ArborealEvent;
 import org.chemthunder.arboreal.api.event.EventUtil;
 import org.jspecify.annotations.Nullable;
 
 /**
  * @author Chemthunder
  */
-public interface MobEntityGetTargetCallback {
+public interface MobEntityGetTargetCallback extends ArborealEvent {
     Event<MobEntityGetTargetCallback> EVENT = EventFactory.createArrayBacked(MobEntityGetTargetCallback.class,
             events -> (
                     mob,
@@ -23,10 +24,6 @@ public interface MobEntityGetTargetCallback {
                 return target;
             }
     );
-
-    default int getPriority() {
-        return 1000;
-    }
 
     @Nullable LivingEntity getTarget(MobEntity mob, LivingEntity originalTarget);
 }

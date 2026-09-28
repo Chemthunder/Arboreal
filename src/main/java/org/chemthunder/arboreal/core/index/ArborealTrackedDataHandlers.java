@@ -1,4 +1,4 @@
-package org.chemthunder.arboreal.api.impl;
+package org.chemthunder.arboreal.core.index;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricTrackedDataRegistry;
 import net.minecraft.entity.damage.DamageType;
@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * @author Chemthunder
  */
+@SuppressWarnings("unused")
 public interface ArborealTrackedDataHandlers {
     TrackedDataHandler<List<ItemStack>> ITEM_STACK_LIST = TrackedDataHandler.create(ItemStack.OPTIONAL_LIST_PACKET_CODEC);
     TrackedDataHandler<RegistryKey<DamageType>> DAMAGE_TYPE_KEY = TrackedDataHandler.create(ArborealMiscCodecs.DAMAGE_TYPE_REGISTRY_KEY_PACKET_CODEC);

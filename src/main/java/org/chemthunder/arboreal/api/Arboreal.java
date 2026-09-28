@@ -7,18 +7,12 @@ import org.chemthunder.arboreal.api.registration.Index;
 /**
  * @author Chemthunder
  */
-public class Arboreal {
-    private final String modid;
-
-    public Arboreal(String modid) {
-        this.modid = modid;
-    }
-
+public record Arboreal(String modId) {
     public <T> Index<T> createIndex(Registry<T> registry) {
-        return new Index<>(registry, modid);
+        return new Index<>(registry, modId);
     }
 
     public Identifier id(String path) {
-        return Identifier.of(modid, path);
+        return Identifier.of(modId, path);
     }
 }

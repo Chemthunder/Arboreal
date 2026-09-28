@@ -15,11 +15,11 @@ import java.util.function.Consumer;
  */
 @Environment(EnvType.CLIENT)
 public interface Tooltip {
-    default void applyTooltip(
+    void applyTooltip(
             ItemStack instance,
             Item.TooltipContext context,
             TooltipDisplayComponent displayComponent,
             Consumer<Text> textConsumer,
             TooltipType type
-    ) {}
+    );
 }

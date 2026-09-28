@@ -1,4 +1,4 @@
-package org.chemthunder.arboreal.api.utilities;
+package org.chemthunder.arboreal.api.util;
 
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -65,17 +65,6 @@ public abstract class ItemUtil {
                 .build();
     }
 
-    // I already know Aco is gonna scream at me if I try doing this
-//    public static String formatString(String string) {
-//        List<Character> characters = new ArrayList<>();
-//
-//        for (char character : string.toCharArray()) {
-//            characters.add(character);
-//        }
-//
-//        return characters;
-//    }
-
     public static List<Item> getHotbarItems(LivingEntity living) {
         List<Item> stacks = new ArrayList<>();
 
@@ -93,5 +82,37 @@ public abstract class ItemUtil {
 
     public static int createItemBarStep(int progress, int maxValue) {
         return Math.clamp(Math.round((float) progress / maxValue * 13), 0, 13);
+    }
+
+    /**
+     * @author AcoYT
+     * From AcornLib by AcoYT
+     * <a href="https://modrinth.com/mod/acornlib">AcornLib</a>
+     */
+    public static String formatString(String input) {
+        StringBuilder outputBuilder = new StringBuilder();
+
+        boolean expecting = false;
+        for (int i = 0; i < input.length(); i++) {
+            char indexChar = input.toCharArray()[i];
+
+            if (i == 0) {
+                indexChar = Character.toUpperCase(indexChar);
+            }
+
+            if (indexChar == '_') {
+                indexChar = ' ';
+                expecting = true;
+            }
+
+            if (expecting) {
+                indexChar = Character.toUpperCase(indexChar);
+                expecting = false;
+            }
+
+            outputBuilder.append(indexChar);
+        }
+
+        return outputBuilder.toString();
     }
 }

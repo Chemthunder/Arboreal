@@ -1,4 +1,4 @@
-package org.chemthunder.arboreal.api.impl;
+package org.chemthunder.arboreal.core.index;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * @author Chemthunder
  */
+@SuppressWarnings("unused")
 public interface ArborealMiscCodecs {
     PacketCodec<ByteBuf, RegistryKey<DamageType>> DAMAGE_TYPE_REGISTRY_KEY_PACKET_CODEC = RegistryKey.createPacketCodec(RegistryKeys.DAMAGE_TYPE);
     PacketCodec<ByteBuf, List<String>> STRING_LIST = PacketCodecs.codec(Codec.STRING.listOf());

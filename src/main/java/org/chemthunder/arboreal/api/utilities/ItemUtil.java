@@ -90,4 +90,8 @@ public abstract class ItemUtil {
 
         return stacks;
     }
+
+    public static int createItemBarStep(int progress, int maxValue) {
+        return Math.clamp(Math.round((float) progress / maxValue * 13), 0, 13);
+    }
 }

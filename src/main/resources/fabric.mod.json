@@ -8,7 +8,6 @@
 		"Chemthunder"
 	],
 	"contact": {
-		"homepage": "https://chemthunderdev.vercel.app",
 		"sources": "https://github.com/Chemthunder/Arboreal"
 	},
 	"license": "CC0-1.0",
@@ -18,10 +17,14 @@
 		"main": [
 			"org.chemthunder.arboreal.core.ArborealCore"
 		],
+		"client": [
+			"org.chemthunder.arboreal.core.ArborealCoreClient"
+		],
 		"fabric-datagen": [
 			"org.chemthunder.arboreal.core.ArborealCore"
 		]
 	},
+	"accessWidener": "arboreal.accessWidener",
 	"mixins": [
 		"arboreal.mixins.json"
 	],

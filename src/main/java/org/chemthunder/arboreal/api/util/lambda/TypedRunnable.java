@@ -1,4 +1,4 @@
-package org.chemthunder.arboreal.api.util.consumer;
+package org.chemthunder.arboreal.api.util.lambda;
 
 /**
  * @author Chemthunder

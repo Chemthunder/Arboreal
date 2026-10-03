@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 /**
  * @author Chemthunder
  */
+@SuppressWarnings("unused")
 public record WorldPoint(RegistryKey<World> dimension, BlockPos pos) {
     public static final Codec<WorldPoint> CODEC = RecordCodecBuilder.create(codec -> codec.group(
             World.CODEC.fieldOf("dimension").forGetter(WorldPoint::dimension),

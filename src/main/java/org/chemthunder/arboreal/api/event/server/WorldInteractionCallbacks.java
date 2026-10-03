@@ -5,8 +5,6 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Pair;
 import org.chemthunder.arboreal.api.event.ArborealEvent;
 import org.chemthunder.arboreal.api.event.EventUtil;
@@ -33,12 +31,12 @@ public interface WorldInteractionCallbacks {
     Event<EditDamage> EDIT_DAMAGE = EventFactory.createArrayBacked(EditDamage.class,
             events -> (
                     attacker,
-                    self,
+                    victim,
                     source,
                     amount
             ) -> {
                 for (EditDamage event : EventUtil.sortAndCollectEvents(events, EditDamage::getPriority)) {
-                    return event.editDamage(attacker, self, source, amount);
+                    return event.editDamage(attacker, victim, source, amount);
                 }
                 return Optional.empty();
             }
@@ -49,6 +47,6 @@ public interface WorldInteractionCallbacks {
     }
 
     interface EditDamage extends ArborealEvent {
-        Optional<Pair<RegistryKey<DamageType>, Float>> editDamage(@Nullable Entity attacker, LivingEntity self, DamageSource source, float amount);
+        Optional<Pair<DamageSource, Float>> editDamage(@Nullable Entity attacker, LivingEntity victim, DamageSource source, float amount);
     }
 }

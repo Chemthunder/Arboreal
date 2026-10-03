@@ -4,16 +4,19 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.advancement.criterion.TickCriterion;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.chemthunder.arboreal.core.networking.s2c.PlayClientSoundPayload;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Random;
@@ -75,5 +78,15 @@ public abstract class WorldUtil {
                     velocity.z
             );
         }
+    }
+
+    @Nullable
+    public static EntityHitResult getEntityRaycast(Entity entity, Predicate<Entity> predicate, double range) {
+        return ProjectileUtil.getCollision(entity, predicate, range) instanceof EntityHitResult entityHitResult ? entityHitResult : null;
+    }
+
+    @Nullable
+    public static EntityHitResult getEntityRaycast(Entity entity, double range) {
+        return ProjectileUtil.getCollision(entity, (target -> true), range) instanceof EntityHitResult entityHitResult ? entityHitResult : null;
     }
 }

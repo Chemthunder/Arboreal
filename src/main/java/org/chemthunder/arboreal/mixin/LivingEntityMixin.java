@@ -8,9 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageType;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Pair;
 import net.minecraft.world.World;
@@ -52,7 +50,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Se
     private boolean arboreal$WorldInteractionCallbacks$EditDamage(ServerWorld world, DamageSource source, float amount, Operation<Boolean> original) {
         LivingEntity living = (LivingEntity) (Object) this;
 
-        Optional<Pair<RegistryKey<DamageType>, Float>> optionalPair = WorldInteractionCallbacks.EDIT_DAMAGE.invoker().editDamage(
+        Optional<Pair<DamageSource, Float>> optionalPair = WorldInteractionCallbacks.EDIT_DAMAGE.invoker().editDamage(
                 source.getAttacker(),
                 living,
                 source,
@@ -60,8 +58,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Se
         );
 
         if (optionalPair.isPresent()) {
-            Pair<RegistryKey<DamageType>, Float> pair = optionalPair.get();
-            return original.call(world, this.getDamageSources().create(pair.getLeft()), pair.getRight());
+            Pair<DamageSource, Float> pair = optionalPair.get();
+            return original.call(world, pair.getLeft(), pair.getRight());
         }
         return original.call(world, source, amount);
     }

@@ -5,9 +5,15 @@
 	"name": "Arboreal",
 	"description": "A library adding plenty of utilities to aid you in several fields.",
 	"authors": [
-		"Chemthunder"
+		{
+			"name": "Chemthunder",
+			"contact": {
+				"sources": "https://github.com/Chemthunder"
+			}
+		}
 	],
 	"contact": {
+		"issues": "https://github.com/Chemthunder/Arboreal/issues",
 		"sources": "https://github.com/Chemthunder/Arboreal"
 	},
 	"license": "All Rights Reserved.",
@@ -33,5 +39,13 @@
 		"minecraft": "~1.21.11",
 		"java": ">=21",
 		"fabric-api": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"Discord": "https://discord.gg/TYHMzA2wqv"
+			},
+			"update_checker": false
+		}
 	}
 }

@@ -7,6 +7,7 @@ import org.chemthunder.arboreal.api.registration.Index;
 /**
  * @author Chemthunder
  */
+@SuppressWarnings("unused")
 public record Arboreal(String modId) {
     public <T> Index<T> createIndex(Registry<T> registry) {
         return new Index<>(registry, modId);

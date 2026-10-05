@@ -20,7 +20,7 @@ import java.util.function.Consumer;
  * @author Chemthunder
  */
 @SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "unused"})
-public class ArborealAdvancementProvider extends FabricAdvancementProvider {
+public abstract class ArborealAdvancementProvider extends FabricAdvancementProvider {
     private final Arboreal arboreal;
 
     public ArborealAdvancementProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup, Arboreal arboreal) {

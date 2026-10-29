@@ -1,17 +1,15 @@
 package org.chemthunder.arboreal.core;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraft.client.data.BlockStateModelGenerator;
-import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.chemthunder.arboreal.api.Arboreal;
 import org.chemthunder.arboreal.api.data.client.ModelUploader;
 import org.chemthunder.arboreal.api.event.server.WorldInteractionCallbacks;
 import org.chemthunder.arboreal.api.networking.PacketNetwork;
+import org.chemthunder.arboreal.api.registration.DataIndex;
 import org.chemthunder.arboreal.core.event.EditEvent;
 import org.chemthunder.arboreal.core.index.ArborealAttachmentTypes;
 import org.chemthunder.arboreal.core.index.ArborealItems;
@@ -33,8 +31,9 @@ public class ArborealCore implements ModInitializer, DataGeneratorEntrypoint {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final Arboreal MAIN = new Arboreal(MOD_ID);
 
-	public static final List<PacketNetwork> NETWORKS = new ArrayList<>();
 	public static final Map<ModelUploader, Item> UPLOADERS = new HashMap<>();
+	public static final List<PacketNetwork> NETWORKS = new ArrayList<>();
+	public static final List<DataIndex<?>> TO_REGISTER = new ArrayList<>();
 
 	public void onInitialize() {
 		LOGGER.info("Initializing Arboreal internal.");
@@ -58,6 +57,7 @@ public class ArborealCore implements ModInitializer, DataGeneratorEntrypoint {
 		var pack = fabricDataGenerator.createPack();
 
 		pack.addProvider(ArborealCoreData.Models::new);
+		pack.addProvider(ArborealCoreData.Dynamics::new);
 	}
 
 	public static Identifier id(String path) {

@@ -109,7 +109,7 @@ public abstract class ArborealAdvancementProvider extends FabricAdvancementProvi
         ));
     }
 
-    private record Context(
+    protected record Context(
             String name,
             Text title,
             Text desc,

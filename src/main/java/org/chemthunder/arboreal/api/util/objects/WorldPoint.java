@@ -11,7 +11,9 @@ import net.minecraft.world.World;
 
 /**
  * @author Chemthunder
+ * Deprecated, use <code>GlobalPos</code> instead.
  */
+@Deprecated(forRemoval = true, since = "1.1")
 @SuppressWarnings("unused")
 public record WorldPoint(RegistryKey<World> dimension, BlockPos pos) {
     public static final Codec<WorldPoint> CODEC = RecordCodecBuilder.create(codec -> codec.group(

@@ -16,7 +16,6 @@
     "requireAnnotations": true
   },
   "client": [
-    "client.CreativeInventoryScreenMixin",
     "client.InGameHudMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftClientMixin"

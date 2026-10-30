@@ -2,11 +2,11 @@ package org.chemthunder.arboreal.api.item;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
@@ -18,8 +18,8 @@ public interface Tooltip {
     void applyTooltip(
             ItemStack instance,
             Item.TooltipContext context,
-            TooltipDisplayComponent displayComponent,
-            Consumer<Text> textConsumer,
-            TooltipType type
+            TooltipDisplay displayComponent,
+            Consumer<Component> textConsumer,
+            TooltipFlag type
     );
 }

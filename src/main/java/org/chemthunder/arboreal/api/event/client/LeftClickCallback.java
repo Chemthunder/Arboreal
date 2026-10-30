@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 import org.chemthunder.arboreal.api.event.ArborealEvent;
 import org.chemthunder.arboreal.api.event.EventUtil;
 
@@ -23,5 +23,5 @@ public interface LeftClickCallback extends ArborealEvent {
             }
     );
 
-    void onLeftClick(MinecraftClient client);
+    void onLeftClick(Minecraft client);
 }

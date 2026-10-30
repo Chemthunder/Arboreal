@@ -2,14 +2,14 @@ package org.chemthunder.arboreal.api.event.server;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.Level;
 import org.chemthunder.arboreal.api.event.ArborealEvent;
 import org.chemthunder.arboreal.api.event.EventUtil;
 import org.jetbrains.annotations.Nullable;
@@ -49,16 +49,16 @@ public interface ItemCallbacks {
     );
 
     interface InventoryTick extends ArborealEvent {
-        void tick(ItemStack stack, World world, @Nullable Entity entity, EquipmentSlot slot);
+        void tick(ItemStack stack, Level world, @Nullable Entity entity, EquipmentSlot slot);
     }
 
     interface InjectTooltip extends ArborealEvent {
         void applyTooltip(
                 ItemStack instance,
                 Item.TooltipContext context,
-                TooltipDisplayComponent displayComponent,
-                Consumer<Text> textConsumer,
-                TooltipType type
+                TooltipDisplay displayComponent,
+                Consumer<Component> textConsumer,
+                TooltipFlag type
         );
     }
 }

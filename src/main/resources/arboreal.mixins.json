@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "org.chemthunder.arboreal.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "mixins": [
     "ConsumableComponentMixin",
     "EntityMixin",
@@ -16,7 +16,6 @@
     "requireAnnotations": true
   },
   "client": [
-    "client.InGameHudMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftClientMixin"
   ]

@@ -1,24 +1,18 @@
 package org.chemthunder.arboreal.api.util;
 
-import net.minecraft.component.ComponentType;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.ApiStatus;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Chemthunder
@@ -26,58 +20,39 @@ import java.util.List;
 @ApiStatus.NonExtendable
 @SuppressWarnings("unused")
 public abstract class ItemUtil {
-    public static <T> ItemStack createStackWithComponent(ItemConvertible item, ComponentType<T> component, T value) {
+    public static <T> ItemStack createStackWithComponent(ItemLike item, DataComponentType<T> component, T value) {
         ItemStack stack = new ItemStack(item);
         stack.set(component, value);
         return stack;
     }
 
-    public static RegistryKey<Item> key(ItemConvertible itemConvertible) {
-        Item item = itemConvertible.asItem();
-        Identifier itemId = Registries.ITEM.getId(item);
-        return RegistryKey.of(RegistryKeys.ITEM, itemId);
+    public static ResourceKey<Item> key(ItemLike ItemLike) {
+        Item item = ItemLike.asItem();
+        Identifier itemId = BuiltInRegistries.ITEM.getKey(item);
+        return ResourceKey.create(Registries.ITEM, itemId);
     }
 
-    public static RegistryKey<Item> key(Identifier itemId) {
-        return RegistryKey.of(RegistryKeys.ITEM, itemId);
-    }
-
-    public static AttributeModifiersComponent createBasicAttributes(float attackDamage, float attackSpeed) {
-        return AttributeModifiersComponent.builder()
+    public static ItemAttributeModifiers createBasicAttributes(float attackDamage, float attackSpeed) {
+        return ItemAttributeModifiers.builder()
                 .add(
-                        EntityAttributes.ATTACK_DAMAGE,
-                        new EntityAttributeModifier(
-                                Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,
+                        Attributes.ATTACK_DAMAGE,
+                        new AttributeModifier(
+                                Item.BASE_ATTACK_DAMAGE_ID,
                                 attackDamage,
-                                EntityAttributeModifier.Operation.ADD_VALUE
+                                AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                         ),
-                        AttributeModifierSlot.MAINHAND
+                        EquipmentSlotGroup.MAINHAND
                 )
                 .add(
-                        EntityAttributes.ATTACK_SPEED,
-                        new EntityAttributeModifier(
-                                Item.BASE_ATTACK_SPEED_MODIFIER_ID,
+                        Attributes.ATTACK_SPEED,
+                        new AttributeModifier(
+                                Item.BASE_ATTACK_SPEED_ID,
                                 attackSpeed,
-                                EntityAttributeModifier.Operation.ADD_VALUE
+                                AttributeModifier.Operation.ADD_VALUE
                         ),
-                        AttributeModifierSlot.MAINHAND
+                        EquipmentSlotGroup.MAINHAND
                 )
                 .build();
-    }
-
-    public static List<Item> getHotbarItems(LivingEntity living) {
-        List<Item> stacks = new ArrayList<>();
-
-        if (living instanceof PlayerEntity player) {
-            for (int i = 0; i < PlayerInventory.getHotbarSize(); i++) {
-                stacks.add(player.getInventory().getStack(i).getItem());
-            }
-        } else {
-            stacks.add(living.getMainHandStack().getItem());
-            stacks.add(living.getOffHandStack().getItem());
-        }
-
-        return stacks;
     }
 
     public static int createItemBarStep(int progress, int maxValue) {

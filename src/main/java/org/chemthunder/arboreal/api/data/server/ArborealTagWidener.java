@@ -1,12 +1,12 @@
 package org.chemthunder.arboreal.api.data.server;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagBuilder;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Registry;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagKey;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -14,12 +14,12 @@ import java.util.concurrent.CompletableFuture;
  * @author Chemthunder
  */
 @SuppressWarnings("unused")
-public abstract class ArborealTagWidener<T> extends FabricTagProvider<T> {
-    public ArborealTagWidener(FabricDataOutput output, RegistryKey<? extends Registry<T>> registryKey, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-        super(output, registryKey, registriesFuture);
+public abstract class ArborealTagWidener<T> extends TagsProvider<T> {
+    public ArborealTagWidener(PackOutput output, ResourceKey<? extends Registry<T>> registryKey, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, registryKey, lookupProvider);
     }
 
     public TagBuilder accessTagBuilder(TagKey<T> tagKey) {
-        return this.getTagBuilder(tagKey);
+        return this.getOrCreateRawBuilder(tagKey);
     }
 }

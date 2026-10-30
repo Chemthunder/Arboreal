@@ -3,16 +3,16 @@ package org.chemthunder.arboreal.mixin;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.entity.Attackable;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Pair;
-import net.minecraft.world.World;
-import net.minecraft.world.waypoint.ServerWaypoint;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Attackable;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.waypoints.WaypointTransmitter;
 import org.chemthunder.arboreal.api.event.server.WorldInteractionCallbacks;
 import org.chemthunder.arboreal.api.item.CustomConsumeItem;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,8 +24,8 @@ import java.util.Optional;
  * @author Chemthunder
  */
 @Mixin(value = LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements Attackable, ServerWaypoint {
-    public LivingEntityMixin(EntityType<?> type, World world) {
+public abstract class LivingEntityMixin extends Entity implements Attackable, WaypointTransmitter {
+    public LivingEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
     }
 
@@ -33,34 +33,34 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Se
             method = "spawnItemParticles",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;addParticleClient(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"
+                    target = "Lnet/minecraft/world/level/Level;addParticle(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V"
             )
     )
-    private void arboreal$CustomConsumeItem(World instance, ParticleEffect parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Operation<Void> original) {
+    private void arboreal$CustomConsumeItem(Level instance, ParticleOptions particle, double x, double y, double z, double xd, double yd, double zd, Operation<Void> original) {
         LivingEntity living = (LivingEntity) (Object)this;
 
-        if (living.getStackInHand(living.getActiveHand()).getItem() instanceof CustomConsumeItem c) {
-            original.call(instance, c.getConsumeParticleEffect(living), x, y, z, velocityX, velocityY, velocityZ);
+        if (living.getItemInHand(living.getUsedItemHand()).getItem() instanceof CustomConsumeItem c) {
+            original.call(instance, c.getConsumeParticleEffect(living), x, y, z, xd, yd, zd);
             return;
         }
-        original.call(instance, parameters, x, y, z, velocityX, velocityY, velocityZ);
+        original.call(instance, particle, x, y, z, xd, yd, zd);
     }
 
-    @WrapMethod(method = "damage")
-    private boolean arboreal$WorldInteractionCallbacks$EditDamage(ServerWorld world, DamageSource source, float amount, Operation<Boolean> original) {
+    @WrapMethod(method = "hurtServer")
+    private boolean arboreal$WorldInteractionCallbacks$EditDamage(ServerLevel level, DamageSource source, float damage, Operation<Boolean> original) {
         LivingEntity living = (LivingEntity) (Object) this;
 
         Optional<Pair<DamageSource, Float>> optionalPair = WorldInteractionCallbacks.EDIT_DAMAGE.invoker().editDamage(
-                source.getAttacker(),
+                source.getEntity(),
                 living,
                 source,
-                amount
+                damage
         );
 
         if (optionalPair.isPresent()) {
             Pair<DamageSource, Float> pair = optionalPair.get();
-            return original.call(world, pair.getLeft(), pair.getRight());
+            return original.call(level, pair.getFirst(), pair.getSecond());
         }
-        return original.call(world, source, amount);
+        return original.call(level, source, damage);
     }
 }

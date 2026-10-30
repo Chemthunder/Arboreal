@@ -1,14 +1,15 @@
 package org.chemthunder.arboreal.api.item;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.sound.SoundEvent;
+
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.LivingEntity;
 
 /**
  * @author Chemthunder
  */
 public interface CustomConsumeItem {
-    ParticleEffect getConsumeParticleEffect(LivingEntity living);
+    ParticleOptions getConsumeParticleEffect(LivingEntity living);
 
     SoundEvent getConsumeEatSound(LivingEntity living);
 }

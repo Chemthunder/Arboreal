@@ -2,30 +2,30 @@ package org.chemthunder.arboreal.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.component.type.ConsumableComponent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.component.Consumable;
 import org.chemthunder.arboreal.api.item.CustomConsumeItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(value = ConsumableComponent.class)
+@Mixin(value = Consumable.class)
 public abstract class ConsumableComponentMixin {
     @WrapOperation(
-            method = "spawnParticlesAndPlaySound",
+            method = "emitParticlesAndSounds",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"
+                    target = "Lnet/minecraft/world/entity/LivingEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"
             )
     )
-    private void arboreal$CustomConsumeItem(LivingEntity instance, SoundEvent soundEvent, float v, float f, Operation<Void> original) {
+    private void arboreal$CustomConsumeItem(LivingEntity instance, SoundEvent soundEvent, float vol, float pi, Operation<Void> original) {
         original.call(
                 instance,
-                instance.getStackInHand(instance.getActiveHand()).getItem() instanceof CustomConsumeItem c
+                instance.getItemInHand(instance.getUsedItemHand()).getItem() instanceof CustomConsumeItem c
                         ? c.getConsumeEatSound(instance)
                         : soundEvent,
-                v,
-                f
+                vol,
+                pi
         );
     }
 }

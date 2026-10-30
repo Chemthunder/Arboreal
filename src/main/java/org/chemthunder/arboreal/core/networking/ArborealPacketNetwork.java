@@ -12,7 +12,7 @@ import org.chemthunder.arboreal.core.networking.s2c.PlayClientSoundPayload;
  */
 public class ArborealPacketNetwork extends PacketNetwork {
     public void registerTypes() {
-        PayloadTypeRegistry.playS2C().register(PlayClientSoundPayload.ID, PlayClientSoundPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(PlayClientSoundPayload.ID, PlayClientSoundPayload.CODEC);
     }
 
     public void client2server() {}

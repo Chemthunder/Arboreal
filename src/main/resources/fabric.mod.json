@@ -30,14 +30,13 @@
 			"org.chemthunder.arboreal.core.ArborealCore"
 		]
 	},
-	"accessWidener": "arboreal.accessWidener",
 	"mixins": [
 		"arboreal.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",
-		"minecraft": "~1.21.11",
-		"java": ">=21",
+		"minecraft": "~26.3",
+		"java": ">=25",
 		"fabric-api": "*"
 	},
 	"custom": {

@@ -1,7 +1,7 @@
 package org.chemthunder.arboreal.api.registration;
 
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +27,10 @@ public class Index<T> {
     }
 
     public Identifier getId(T object) {
-        return this.registry.getId(object);
+        return this.registry.getKey(object);
     }
 
     public Identifier id(String path) {
-        return Identifier.of(modid, path);
+        return Identifier.fromNamespaceAndPath(modid, path);
     }
 }

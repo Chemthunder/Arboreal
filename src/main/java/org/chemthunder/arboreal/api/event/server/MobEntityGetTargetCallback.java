@@ -2,8 +2,8 @@ package org.chemthunder.arboreal.api.event.server;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import org.chemthunder.arboreal.api.event.ArborealEvent;
 import org.chemthunder.arboreal.api.event.EventUtil;
 import org.jspecify.annotations.Nullable;
@@ -25,5 +25,5 @@ public interface MobEntityGetTargetCallback extends ArborealEvent {
             }
     );
 
-    @Nullable LivingEntity getTarget(MobEntity mob, LivingEntity originalTarget);
+    @Nullable LivingEntity getTarget(Mob mob, LivingEntity originalTarget);
 }

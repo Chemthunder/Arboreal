@@ -2,6 +2,7 @@ package org.chemthunder.arboreal.api.registration;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +33,9 @@ public class Index<T> {
 
     public Identifier id(String path) {
         return Identifier.fromNamespaceAndPath(modid, path);
+    }
+
+    public ResourceKey<T> keyOf(String path) {
+        return ResourceKey.create(this.registry.key(), this.id(path));
     }
 }

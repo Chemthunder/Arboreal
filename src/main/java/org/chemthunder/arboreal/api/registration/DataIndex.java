@@ -7,12 +7,15 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import org.chemthunder.arboreal.api.util.objects.KeyMap;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Iterator;
 
 /**
  * @author Chemthunder
  */
 @SuppressWarnings("unused")
-public class DataIndex<T> {
+public class DataIndex<T> implements Iterable<T> {
     private final ResourceKey<Registry<T>> resourceKey;
     private final String modid;
 
@@ -39,5 +42,10 @@ public class DataIndex<T> {
 
     public Identifier id(String path) {
         return Identifier.fromNamespaceAndPath(modid, path);
+    }
+
+    @NotNull
+    public Iterator<T> iterator() {
+        return this.output.values().iterator();
     }
 }

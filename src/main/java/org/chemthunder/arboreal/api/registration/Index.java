@@ -3,15 +3,17 @@ package org.chemthunder.arboreal.api.registration;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Chemthunder
  */
 @SuppressWarnings("unused")
-public class Index<T> {
+public class Index<T> implements Iterable<T> {
     public final List<T> objs = new ArrayList<>();
 
     private final Registry<T> registry;
@@ -37,5 +39,10 @@ public class Index<T> {
 
     public ResourceKey<T> keyOf(String path) {
         return ResourceKey.create(this.registry.key(), this.id(path));
+    }
+
+    @NotNull
+    public Iterator<T> iterator() {
+        return this.objs.iterator();
     }
 }

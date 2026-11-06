@@ -3,10 +3,12 @@ package org.chemthunder.arboreal.api.networking;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.chemthunder.arboreal.core.ArborealCore;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * @author Chemthunder
  */
+@ApiStatus.Experimental
 @SuppressWarnings("unused")
 public abstract class PacketNetwork {
     public abstract void registerTypes();

@@ -3,6 +3,7 @@ package org.chemthunder.arboreal.api.registration;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import org.chemthunder.arboreal.core.ArborealCore;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ public class Index<T> implements Iterable<T> {
     public Index(Registry<T> registry, String modid) {
         this.registry = registry;
         this.modid = modid;
+
+        ArborealCore.LOGGER.info("[REGISTRATION] Created Index of registry: {} id'd as {}", registry.key().identifier(), modid);
     }
 
     public <M extends T> M register(String name, M obj) {

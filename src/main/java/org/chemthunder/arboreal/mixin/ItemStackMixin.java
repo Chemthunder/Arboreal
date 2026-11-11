@@ -36,6 +36,7 @@ public abstract class ItemStackMixin {
         if (itemStack.getItem() instanceof Tooltip tooltip) {
             tooltip.applyTooltip(itemStack, context, display, builder, tooltipFlag);
         }
+        ItemCallbacks.INJECT_TOOLTIP.invoker().applyTooltip(itemStack, context, display, builder, tooltipFlag);
         original.call(instance, itemStack, context, display, builder, tooltipFlag);
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import org.chemthunder.arboreal.api.util.objects.KeyMap;
+import org.chemthunder.arboreal.core.ArborealCore;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
@@ -24,6 +25,8 @@ public class DataIndex<T> implements Iterable<T> {
     public DataIndex(ResourceKey<Registry<T>> resourceKey, String modid) {
         this.modid = modid;
         this.resourceKey = resourceKey;
+
+        ArborealCore.LOGGER.info("[REGISTRATION] Created DataIndex of registry: {} id'd as {}", resourceKey.identifier(), modid);
     }
 
     public ResourceKey<T> register(String id, T value) {

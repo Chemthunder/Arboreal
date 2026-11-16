@@ -1,6 +1,8 @@
-package org.chemthunder.arboreal.api;
+package org.chemthunder.arboreal.api.core;
 
 import com.mojang.serialization.Codec;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricSoundsProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -18,47 +20,65 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 import org.apache.commons.lang3.function.TriFunction;
-import org.chemthunder.arboreal.api.data.client.ModelUploader;
 import org.chemthunder.arboreal.api.data.server.ArborealTagWidener;
-import org.chemthunder.arboreal.api.registration.DataIndex;
-import org.chemthunder.arboreal.api.registration.Index;
-import org.chemthunder.arboreal.core.ArborealCore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * @author Chemthunder
  */
 @SuppressWarnings("unused")
-public record Arboreal(String modId) {
-    public <T> Index<T> createIndex(Registry<T> registry) {
-        return new Index<>(registry, modId);
-    }
+public class Arboreal {
+    protected List<ArborealTask> tasks = new ArrayList<>();
 
-    public <T> DataIndex<T> createDataIndex(ResourceKey<Registry<T>> registry) {
-        return new DataIndex<>(registry, modId);
-    }
+    private final String modId;
+    private final Logger logger;
 
-    public DataPack createDataPack(FabricDataGenerator fdg) {
-        return DataPack.create(fdg);
+    public Arboreal(String modId) {
+        this.modId = modId;
+        this.logger = LoggerFactory.getLogger(modId);
     }
 
     public Identifier id(String path) {
         return Identifier.fromNamespaceAndPath(modId, path);
     }
 
-    public void mapModelUploader(ModelUploader uploader, Item target) {
-        ArborealCore.UPLOADERS.put(uploader, target);
+    public List<ArborealTask> getTasks() {
+        return this.tasks;
     }
 
-    public void registerDataIndex(DataIndex<?> index) {
-        ArborealCore.TO_REGISTER.add(index);
+    public void addHandler(ArborealTask task) {
+        this.tasks.add(task);
     }
 
+    public void addHandler(Supplier<ArborealTask> task) {
+        this.tasks.add(task.get());
+    }
+
+    public void initMain() {
+        this.tasks.forEach(ArborealTask::runMain);
+        this.logger.info("[MAIN] Completed tasks for {}", this.modId);
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void initClient() {
+        this.tasks.forEach(ArborealTask::runClient);
+        this.logger.info("[CLIENT] Completed tasks for {}", this.modId);
+    }
+
+    public static DataPack createDataPack(FabricDataGenerator fdg) {
+        return DataPack.create(fdg);
+    }
+
+    @SuppressWarnings("UnusedReturnValue")
     public static class DataPack {
         private final FabricDataGenerator.Pack datapack;
 

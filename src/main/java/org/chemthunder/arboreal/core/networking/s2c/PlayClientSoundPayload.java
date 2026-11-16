@@ -15,6 +15,7 @@ import org.chemthunder.arboreal.core.ArborealCore;
  */
 public record PlayClientSoundPayload(SoundEvent event, float volume, float pitch) implements CustomPacketPayload {
     public static final Type<PlayClientSoundPayload> ID = new Type<>(ArborealCore.id("play_client_sound"));
+
     public static final StreamCodec<ByteBuf, PlayClientSoundPayload> CODEC = StreamCodec.composite(
             SoundEvent.DIRECT_STREAM_CODEC, PlayClientSoundPayload::event,
             ByteBufCodecs.FLOAT, PlayClientSoundPayload::volume,

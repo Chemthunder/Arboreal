@@ -1,49 +1,37 @@
 package org.chemthunder.arboreal.core;
 
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
-import org.chemthunder.arboreal.api.data.client.ModelUploader;
-import org.chemthunder.arboreal.api.networking.PacketNetwork;
-import org.chemthunder.arboreal.api.registration.DataIndex;
+import org.chemthunder.arboreal.api.core.Arboreal;
 import org.chemthunder.arboreal.core.networking.ArborealPacketNetwork;
+import org.jetbrains.annotations.ApiStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Chemthunder
  */
-public class ArborealCore implements ModInitializer, DataGeneratorEntrypoint {
+@ApiStatus.Internal
+public class ArborealCore implements ModInitializer, ClientModInitializer {
 	public static final String MOD_ID = "arboreal";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static final Map<ModelUploader, Item> UPLOADERS = new HashMap<>();
-	public static final List<PacketNetwork> NETWORKS = new ArrayList<>();
-	public static final List<DataIndex<?>> TO_REGISTER = new ArrayList<>();
+	public static final Arboreal MAIN = new Arboreal(MOD_ID);
 
 	public void onInitialize() {
 		LOGGER.info("Initializing Arboreal internal.");
 
-		PacketNetwork.registerNetwork(new ArborealPacketNetwork());
+		MAIN.addHandler(ArborealPacketNetwork::new);
 
-		NETWORKS.forEach(packetNetwork -> {
-			packetNetwork.registerTypes();
-			packetNetwork.client2server();
-		});
+		MAIN.initMain();
 	}
 
-	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
-		var pack = fabricDataGenerator.createPack();
-
-		pack.addProvider(ArborealCoreData.Models::new);
-		pack.addProvider(ArborealCoreData.Dynamics::new);
+	@Environment(EnvType.CLIENT)
+	public void onInitializeClient() {
+		MAIN.initClient();
 	}
 
 	public static Identifier id(String path) {

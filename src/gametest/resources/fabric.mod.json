@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "arboreal-test",
+  "version": "na",
+  "name": "Arboreal",
+  "icon": "assets/arboreal/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.chemthunder.arboreal_test.ArborealTest"
+    ],
+    "client": [
+      "org.chemthunder.arboreal_test.ArborealTestClient"
+    ]
+  }
+}

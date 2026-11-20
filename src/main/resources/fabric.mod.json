@@ -21,8 +21,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"org.chemthunder.arboreal.core.ArborealCore",
-			"org.chemthunder.test.ATest"
+			"org.chemthunder.arboreal.core.ArborealCore"
 		],
 		"client": [
 			"org.chemthunder.arboreal.core.ArborealCore"

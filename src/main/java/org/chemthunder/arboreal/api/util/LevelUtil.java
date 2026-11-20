@@ -13,6 +13,7 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.chemthunder.arboreal.core.networking.s2c.PlayClientSoundPayload;
 import org.jetbrains.annotations.ApiStatus;
@@ -40,14 +41,6 @@ public abstract class LevelUtil {
         if (entity instanceof ServerPlayer serverPlayer) {
             criterion.trigger(serverPlayer);
         }
-    }
-
-    public static BlockPos toBlockPos(Vec3 vec3d) {
-        return new BlockPos.MutableBlockPos(
-                vec3d.x,
-                vec3d.y,
-                vec3d.z
-        );
     }
 
     public static void playClientSound(SoundEvent event, float pitch, float volume, Player target) {
@@ -88,5 +81,17 @@ public abstract class LevelUtil {
     @Nullable
     public static EntityHitResult getEntityRaycast(Entity entity, double range) {
         return ProjectileUtil.getHitResultOnViewVector(entity, (target -> true), range) instanceof EntityHitResult entityHitResult ? entityHitResult : null;
+    }
+
+    public static Vec3 blockPosToVec(BlockPos pos) {
+        return new Vec3(pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    public static BlockPos vecToBlockPos(Vec3 vec3) {
+        return new BlockPos.MutableBlockPos(vec3.x, vec3.y, vec3.z);
+    }
+
+    public static boolean raycastIntersectsBox(Vec3 source, HitResult raycast, AABB aabb) {
+        return aabb.clip(source, raycast.getLocation()).isPresent();
     }
 }

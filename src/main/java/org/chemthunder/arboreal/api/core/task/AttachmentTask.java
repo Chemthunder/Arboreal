@@ -13,12 +13,7 @@ import java.util.function.Consumer;
  * @author Chemthunder
  */
 @SuppressWarnings("unused")
-public class AttachmentTask implements ArborealTask {
-    protected final Arboreal arboreal;
-
-    public AttachmentTask(Arboreal arboreal) {
-        this.arboreal = arboreal;
-    }
+public record AttachmentTask(Arboreal arboreal) implements ArborealTask {
 
     public <T> AttachmentType<T> register(String name, Consumer<AttachmentRegistry.Builder<T>> consumer) {
         return AttachmentRegistry.create(this.arboreal.id(name), consumer);

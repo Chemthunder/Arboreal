@@ -16,10 +16,10 @@ import java.util.Iterator;
  */
 @SuppressWarnings("unused")
 public class RegisterTask<T> implements ArborealTask, Iterable<T> {
-    public final KeyMap<String, T> registrationTargets = new KeyMap<>();
+    public final KeyMap<String, T> items = new KeyMap<>();
     public final Registry<T> registry;
 
-    protected final Arboreal arboreal;
+    public final Arboreal arboreal;
 
     public RegisterTask(Registry<T> registry, Arboreal arboreal) {
         this.registry = registry;
@@ -27,7 +27,7 @@ public class RegisterTask<T> implements ArborealTask, Iterable<T> {
     }
 
     public T register(String name, T object) {
-        this.registrationTargets.put(name, object);
+        this.items.put(name, object);
         return object;
     }
 
@@ -37,12 +37,12 @@ public class RegisterTask<T> implements ArborealTask, Iterable<T> {
 
     @NotNull
     public Iterator<T> iterator() {
-        return this.registrationTargets.values().iterator();
+        return this.items.values().iterator();
     }
 
     public void runMain() {
-        for (T obj : registrationTargets.values()) {
-            String key = registrationTargets.getFromVal(obj);
+        for (T obj : items.values()) {
+            String key = items.getFromVal(obj);
             Registry.register(this.registry, this.arboreal.id(key), obj);
         }
     }

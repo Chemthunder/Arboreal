@@ -20,10 +20,10 @@ import java.util.Iterator;
  */
 @SuppressWarnings("unused")
 public class DataTask<T> implements ArborealTask, Iterable<T> {
-    public final KeyMap<ResourceKey<T>, T> registrationTargets = new KeyMap<>();
+    public final KeyMap<ResourceKey<T>, T> items = new KeyMap<>();
     public final ResourceKey<Registry<T>> registry;
 
-    protected final Arboreal arboreal;
+    public final Arboreal arboreal;
 
     public DataTask(ResourceKey<Registry<T>> registry, Arboreal arboreal) {
         this.registry = registry;
@@ -32,7 +32,7 @@ public class DataTask<T> implements ArborealTask, Iterable<T> {
 
     public ResourceKey<T> register(String key, T obj) {
         ResourceKey<T> resource = ResourceKey.create(this.registry, this.arboreal.id(key));
-        this.registrationTargets.put(resource, obj);
+        this.items.put(resource, obj);
         return resource;
     }
 
@@ -45,12 +45,12 @@ public class DataTask<T> implements ArborealTask, Iterable<T> {
     }
 
     public void generate(BootstrapContext<T> boot) {
-        this.registrationTargets.forEach(boot::register);
+        this.items.forEach(boot::register);
     }
 
     @NotNull
     public Iterator<T> iterator() {
-        return this.registrationTargets.values().iterator();
+        return this.items.values().iterator();
     }
 
     public void runMain() {}

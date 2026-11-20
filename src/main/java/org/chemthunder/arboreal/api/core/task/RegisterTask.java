@@ -26,7 +26,7 @@ public class RegisterTask<T> implements ArborealTask, Iterable<T> {
         this.arboreal = arboreal;
     }
 
-    public T register(String name, T object) {
+    public <U extends T> U register(String name, U object) {
         this.items.put(name, object);
         return object;
     }
@@ -42,8 +42,7 @@ public class RegisterTask<T> implements ArborealTask, Iterable<T> {
 
     public void runMain() {
         for (T obj : items.values()) {
-            String key = items.getFromVal(obj);
-            Registry.register(this.registry, this.arboreal.id(key), obj);
+            Registry.register(this.registry, this.arboreal.id(items.getFromVal(obj)), obj);
         }
     }
 
